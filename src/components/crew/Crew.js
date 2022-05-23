@@ -55,31 +55,33 @@ const Crew = ({ crewData, updateCrewLike }) => {
 				select.classList.remove('select-warning')
 			}
 			setValid(true)
-			setFilteredCrew(() => {
-				if(!containsSpecialChars(state.descr)){
-					const res = crewData.filter(item => {
-						return item.name
-						.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-						.split(' ')
-						.filter(i => i.length !== 2)[query]
-						.toLowerCase()
-						.includes(state.descr.toLowerCase())
-					})
-					if(res.length === 0)setNoResult(true)
-					else setNoResult(false)
-					return res
-				} else {
-					const res = crewData.filter(item => {
-						return item.name.split(' ')
-						.filter(i => i.length !== 2)[query]
-						.toUpperCase()
-						.includes(state.descr.toUpperCase())	
-					})
-					if(res.length === 0)setNoResult(true)
-					else setNoResult(false)
-					return res
-				}
+			setFilteredCrew(() => formatString(query))
+	}
+
+	const formatString = (query) => {
+		if(!containsSpecialChars(state.descr)){
+			const res = crewData.filter(item => {
+				return item.name
+				.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+				.split(' ')
+				.filter(i => !i.includes('.'))[query]
+				.toLowerCase()
+				.includes(state.descr.toLowerCase())
 			})
+			if(res.length === 0)setNoResult(true)
+			else setNoResult(false)
+			return res
+		} else {
+			const res = crewData.filter(item => {
+				return item.name.split(' ')
+				.filter(i => !i.includes('.'))[query]
+				.toUpperCase()
+				.includes(state.descr.toUpperCase())	
+			})
+			if(res.length === 0)setNoResult(true)
+			else setNoResult(false)
+			return res
+		}
 	}
 
 	const containsSpecialChars = (str) => {
