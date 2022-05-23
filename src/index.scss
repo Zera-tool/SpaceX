@@ -213,15 +213,16 @@ a {
     }
 }
 
-input {
+input[type=text] {
   padding: 0 6px;
-  border:none;
-  border-radius: none;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-input:focus {
-  outline: none;
-  border: none;
+input[type=text]:focus {
+  appearance: none;
 }
 
 .search-button {
