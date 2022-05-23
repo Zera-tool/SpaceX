@@ -217,12 +217,18 @@ input[type=text] {
   padding: 0 6px;
   font-size: 16px;
   appearance: none;
+  outline: none;
+  border: none;
   -webkit-appearance: none;
     -moz-appearance: none;
+  outline: none;
+  border: none;
 }
 
 input[type=text]:focus {
   appearance: none;
+  -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .search-button {

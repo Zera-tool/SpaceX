@@ -265,15 +265,22 @@ a {
   border-top-right-radius: 25px;
 }
 
-input {
+input[type=text] {
   padding: 0 6px;
-  border: none;
-  border-radius: none;
-}
-
-input:focus {
+  font-size: 16px;
+  appearance: none;
   outline: none;
   border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+}
+
+input[type=text]:focus {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .search-button {

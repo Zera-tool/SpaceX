@@ -42,9 +42,9 @@ const Crew = ({ crewData, updateCrewLike }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-			let query = 0
+			let queryIndex = 0
 			if(state.type === "Last Name") {
-				query = 1
+				queryIndex = 1
 			}
 			const select = document.getElementById('search-form-select')
 			if(!state.type || state.type === 'empty'){
@@ -55,33 +55,24 @@ const Crew = ({ crewData, updateCrewLike }) => {
 				select.classList.remove('select-warning')
 			}
 			setValid(true)
-			setFilteredCrew(() => formatString(query))
+			setFilteredCrew(() => formatString(queryIndex))
 	}
 
-	const formatString = (query) => {
-		if(!containsSpecialChars(state.descr)){
+	const formatString = (queryIndex) => {
 			const res = crewData.filter(item => {
-				return item.name
-				.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+				let normalize = item.name
+				if(!containsSpecialChars(state.descr)){
+					normalize = item.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+				}
+				return normalize
 				.split(' ')
-				.filter(i => !i.includes('.'))[query]
+				.filter(i => !i.includes('.'))[queryIndex]
 				.toLowerCase()
 				.includes(state.descr.toLowerCase())
 			})
-			if(res.length === 0)setNoResult(true)
-			else setNoResult(false)
+			if(res.length === 0){setNoResult(true)}
+			else {setNoResult(false)}
 			return res
-		} else {
-			const res = crewData.filter(item => {
-				return item.name.split(' ')
-				.filter(i => !i.includes('.'))[query]
-				.toUpperCase()
-				.includes(state.descr.toUpperCase())	
-			})
-			if(res.length === 0)setNoResult(true)
-			else setNoResult(false)
-			return res
-		}
 	}
 
 	const containsSpecialChars = (str) => {
